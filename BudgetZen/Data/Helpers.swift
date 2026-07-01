@@ -8,6 +8,12 @@
 import Foundation
 import SwiftUI
 
+enum InfoType {
+    case general
+    case income
+    case expense
+}
+
 func getBalance() -> Double {
     let incomes = transactions.filter{ $0.type == .income }.map{ $0.amount }.reduce(0, +)
     let expenses = transactions.filter{ $0.type == .expense }.map{ $0.amount }.reduce(0, +)

@@ -33,7 +33,7 @@ struct DashboardView: View {
                 }
                 
                 VStack {
-                    //Grid de cartes
+                    AmountCard(amount: (name: "Solde actuel", detail: getBalance(), type: .general))
                 }
             }
             .padding(.horizontal, 20)
