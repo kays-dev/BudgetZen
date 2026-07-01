@@ -38,6 +38,15 @@ struct Transaction : Identifiable, Hashable {
         }
     }
     
+    static func getTypeOperator(_ typeValue : TransactionType) -> String {
+        switch typeValue{
+        case .income :
+            return "plus"
+        case .expense :
+            return "minus"
+        }
+    }
+    
     //Catégorie des transactions
     enum Category : String, CaseIterable {
         case transport = "Transport"
