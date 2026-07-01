@@ -16,7 +16,7 @@ struct DashboardView: View {
                     .scaledToFit()
                     .frame(maxWidth: 97)
                 
-                VStack(spacing: 16){
+                VStack(spacing: 24){
                     VStack(alignment: .leading, spacing : 4){
                         Text("Tableau de bord")
                             .font(.title)
@@ -29,7 +29,7 @@ struct DashboardView: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    //Message automatique
+                    BudgetMessage()
                 }
                 
                 VStack {
