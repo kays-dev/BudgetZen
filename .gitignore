@@ -1,0 +1,9 @@
+### Swift & Xcode ###
+
+.DS_Store
+
+build/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+*.xcworkspace
