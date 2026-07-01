@@ -26,15 +26,15 @@ struct Transaction : Identifiable, Hashable {
     static func getTypeStyle(_ typeValue : TransactionType) -> (foreground : Color, border : Color, background : Color, shadow : Color){
         switch typeValue{
         case .income :
-            (foreground : .incomeText,
-             border : .incomeBorder,
-             background : .incomeBg,
-             shadow : .incomeShadow)
+            (foreground : Color.incomeText,
+             border : Color.income,
+             background : Color.incomeBg,
+             shadow : Color.income)
         case .expense :
-            (foreground : .expenseText,
-             border : .expenseBorder,
-             background : .expenseBg,
-             shadow : .expenseShadow)
+            (foreground : Color.expenseText,
+             border : Color.expense,
+             background : Color.expenseBg,
+             shadow : Color.expense)
         }
     }
     
