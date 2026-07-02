@@ -32,9 +32,7 @@ struct DashboardView: View {
                     BudgetMessage()
                 }
                 
-                VStack {
-                    AmountCard(amount: (name: "Solde actuel", detail: getBalance(), type: .general))
-                }
+                DashboardGrid()
             }
             .padding(.horizontal, 20)
             .padding(.bottom, 24)

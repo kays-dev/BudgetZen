@@ -14,7 +14,7 @@ struct MainInfoStyle: ViewModifier {
         content
             .font(.title2)
             .bold()
-            .foregroundStyle(infoColorSet.foreground.shadow(.inner(color: infoColorSet.shadow,radius: 8, x: 4)))
+            .foregroundStyle(infoColorSet.foreground.shadow(.inner(color: infoColorSet.shadow,radius: 4, x: 4)))
     }
 }
 

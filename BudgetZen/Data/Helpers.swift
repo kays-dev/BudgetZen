@@ -14,12 +14,28 @@ enum InfoType {
     case expense
 }
 
+func getTotalIncomes() -> Double {
+    return transactions.filter{ $0.type == .income }.map{ $0.amount }.reduce(0, +)
+}
+
+func getTotalExpenses() -> Double {
+    return transactions.filter{ $0.type == .expense }.map{ $0.amount }.reduce(0, +)
+}
+
 func getBalance() -> Double {
-    let incomes = transactions.filter{ $0.type == .income }.map{ $0.amount }.reduce(0, +)
-    let expenses = transactions.filter{ $0.type == .expense }.map{ $0.amount }.reduce(0, +)
-    
-    
-    return incomes - expenses
+    return getTotalIncomes() - getTotalExpenses()
+}
+
+func getIncomeTransactions() -> Int {
+    return transactions.filter{ $0.type == .income }.count
+}
+
+func getExpenseTransactions() -> Int {
+    return transactions.filter{ $0.type == .expense }.count
+}
+
+func getTotalTransactions() -> Int {
+    return getIncomeTransactions() + getExpenseTransactions()
 }
 
 func getBudgetMessage(_ balance : Double) -> (message: String, symbol: String, bgColor : Color, borderColor : Color, foreground : Color){
