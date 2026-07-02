@@ -9,35 +9,11 @@ import SwiftUI
 
 struct DashboardView: View {
     var body: some View {
-        ScrollView{
-            VStack(spacing: 32){
-                Image("appName")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(maxWidth: 97)
-                
-                VStack(spacing: 24){
-                    VStack(alignment: .leading, spacing : 4){
-                        Text("Tableau de bord")
-                            .font(.title)
-                            .bold()
-                            .foregroundStyle(.title)
-                        
-                        Text("Bonjour à toi ! Prêt à suivre ton budget ?")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondaryText)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    
-                    BudgetMessage()
-                }
-                
-                DashboardGrid()
-            }
-            .padding(.horizontal, 20)
-            .padding(.bottom, 24)
+        ViewStyle(isDashboard: true, title: "Tableau de bord", subtitle: "Bonjour à toi ! Prêt à suivre ton budget ?") {
+            DashboardGrid()
+        } messages : {
+            BudgetMessage().myViewMessage()
         }
-        .background(Color.bg)
     }
 }
 

@@ -9,6 +9,21 @@ import SwiftUI
 
 struct InfoCard: View {
     let info : (name: String?, detail: (amount: Double?, number: Int?, text: String?), type: InfoType)
+    var infoStyle : (foreground : Color, border : Color, background : Color, shadow : Color) {
+        
+        let typeIncome = Transaction.TransactionType.income
+        let typeExpense = Transaction.TransactionType.expense
+        
+        if info.type.rawValue == typeIncome.rawValue {
+            return typeIncome.getTypeStyle()
+            
+        } else if info.type.rawValue == typeExpense.rawValue {
+            return typeExpense.getTypeStyle()
+            
+        } else {
+            return (foreground : Color.balanceText, border : Color.balance, background : Color.balancedBg, shadow : Color.balance)
+        }
+    }
     
     var body: some View {
         VStack(spacing: 16){
@@ -19,11 +34,11 @@ struct InfoCard: View {
                     .foregroundStyle(.title)
             }
 
-            MainInfo(amountInfo: info.detail.amount ?? nil , numberInfo: info.detail.number ?? nil, textInfo: info.detail.text ?? nil, infoTypeColors: (foreground: info.type == .income ? .incomeText : (info.type == .expense ? .expenseText : .balanceText), shadow: info.type == .income ? .income : (info.type == .expense ? .expense : .balance)))
+            MainInfo(amountInfo: info.detail.amount ?? nil , numberInfo: info.detail.number ?? nil, textInfo: info.detail.text ?? nil, infoTypeColors: (foreground: infoStyle.foreground, shadow: infoStyle.shadow))
 
         }
         .padding(16)
-        .cardStyle(cardBorders: info.type == .income ? .income : (info.type == .expense ? .expense : .balance))
+        .cardStyle(infoStyle.border, false)
     }
 }
 

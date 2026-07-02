@@ -8,10 +8,10 @@
 import Foundation
 import SwiftUI
 
-enum InfoType {
-    case general
-    case income
-    case expense
+enum InfoType : String, CaseIterable {
+    case general = "Général"
+    case income = "Revenu"
+    case expense = "Dépense"
 }
 
 func getTotalIncomes() -> Double {
@@ -45,5 +45,11 @@ func getBudgetMessage(_ balance : Double) -> (message: String, symbol: String, b
         return (message: "Attention, vos dépenses dépassent vos revenus.", symbol: "exclamationmark.triangle", bgColor: Color.negativeBg, borderColor: Color.negativeBorder, foreground: Color.negativeText)
     } else {
         return (message: "Votre budget est équilibré.", symbol: "minus.square", bgColor: Color.balancedBg, borderColor: Color.balancedBorder, foreground: Color.balancedText)
+    }
+}
+
+extension View {
+    func myViewMessage() -> AnyView {
+        AnyView(self)
     }
 }

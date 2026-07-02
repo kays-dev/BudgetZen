@@ -9,6 +9,7 @@ import SwiftUI
 
 struct CardStyle: ViewModifier {
     var cardBorder : Color
+    var isTransaction : Bool = false
     
     func body(content: Content) -> some View {
         content
@@ -25,15 +26,17 @@ struct CardStyle: ViewModifier {
                             RoundedRectangle(cornerRadius: 24)
                                 .fill(.cardBg)
                         }
-                        .padding(.top, 4)
-                        .padding([.leading,.trailing,.bottom], 1)
+                        .padding(.top, isTransaction ? 1 : 4)
+                        .padding(.bottom, 1)
+                        .padding(.leading, isTransaction ? 0 : 1)
+                        .padding(.trailing, isTransaction ? 4 : 1)
                     }
             }
     }
 }
 
-extension View { func cardStyle(cardBorders : Color) -> some View {
-    modifier( CardStyle(cardBorder: cardBorders))}
+extension View { func cardStyle(_ cardBorders : Color, _ isTransaction : Bool) -> some View {
+    modifier( CardStyle(cardBorder: cardBorders, isTransaction: isTransaction))}
 
 }
 
@@ -46,7 +49,7 @@ private struct StylePreview: View {
             Text("Title")
         }
         .padding()
-            .cardStyle(cardBorders: .balance)
+        .cardStyle(.balance, false)
     }
 }
 

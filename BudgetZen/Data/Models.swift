@@ -21,29 +21,38 @@ struct Transaction : Identifiable, Hashable {
     enum TransactionType : String, CaseIterable {
         case income = "Revenu"
         case expense = "Dépense"
-    }
-    
-    static func getTypeStyle(_ typeValue : TransactionType) -> (foreground : Color, border : Color, background : Color, shadow : Color){
-        switch typeValue{
-        case .income :
-            (foreground : Color.incomeText,
-             border : Color.income,
-             background : Color.incomeBg,
-             shadow : Color.income)
-        case .expense :
-            (foreground : Color.expenseText,
-             border : Color.expense,
-             background : Color.expenseBg,
-             shadow : Color.expense)
+        
+        func getTypeStyle() -> (foreground : Color, border : Color, background : Color, shadow : Color){
+            switch self {
+            case .income :
+                (foreground : Color.incomeText,
+                 border : Color.income,
+                 background : Color.incomeBg,
+                 shadow : Color.income)
+            case .expense :
+                (foreground : Color.expenseText,
+                 border : Color.expense,
+                 background : Color.expenseBg,
+                 shadow : Color.expense)
+            }
         }
-    }
-    
-    static func getTypeOperator(_ typeValue : TransactionType) -> String {
-        switch typeValue{
-        case .income :
-            return "plus"
-        case .expense :
-            return "minus"
+        
+        func getTypeIcon() -> String {
+            switch self {
+            case .income :
+                return "arrowshape.up.circle.fill"
+            case .expense :
+                return "arrowshape.down.circle.fill"
+            }
+        }
+        
+        func getTypeOperator() -> String {
+            switch self {
+            case .income :
+                return "plus"
+            case .expense :
+                return "minus"
+            }
         }
     }
     
@@ -56,24 +65,25 @@ struct Transaction : Identifiable, Hashable {
         case food = "Alimentation"
         case hobby = "Loisir"
         case other = "Autre"
-    }
-    
-    static func getCategoryIcon(_ categoryValue : Category) -> String {
-        switch categoryValue{
-        case .transport :
-            return "car.2"
-        case .shopping :
-            return "storefront"
-        case .health :
-            return "cross.vial"
-        case .work :
-            return "suitcase"
-        case .food :
-            return "takeoutbag.and.cup.and.straw"
-        case .hobby :
-            return "xmark.triangle.circle.square"
-        case .other :
-            return "ellipsis"
+        
+        func getCategoryIcon() -> String {
+            switch self {
+            case .transport :
+                return "car.2"
+            case .shopping :
+                return "storefront"
+            case .health :
+                return "cross.vial"
+            case .work :
+                return "suitcase"
+            case .food :
+                return "takeoutbag.and.cup.and.straw"
+            case .hobby :
+                return "xmark.triangle.circle.square"
+            case .other :
+                return "ellipsis"
+            }
         }
     }
+    
 }
