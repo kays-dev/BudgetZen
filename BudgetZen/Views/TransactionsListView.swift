@@ -10,24 +10,26 @@ import SwiftUI
 struct TransactionsListView: View {
     @State private var query : String = ""
     
+    @State private var initialValues : [Transaction] = transactions.sorted{ $0.date > $1.date}
+    
     var body: some View {
         ViewStyle(title: "Toutes les transactions") {
-            VStack(spacing: 12){
-                ForEach(transactions){ transaction in
-                    TransactionRow(transaction: transaction)
+            ScrollView{
+                VStack(spacing: 12){
+                    ForEach(searchTransactions(initialValues, query)){ transaction in
+                        TransactionRow(transaction: transaction)
+                    }
                 }
-                
-                HStack{
-                
-                }
-                .searchable(text: $query, prompt: "Rechercher une transaction")
+                .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity)
-
+            .safeAreaBar(edge: .top) {
+                HStack{
+                    Searchbar(query: $query)
+                        .padding(.bottom, 32)
+                }
+            }
         }
-        .safeAreaBar(edge: .bottom) {
-            
-        }
+        .scrollDisabled(true)
 
     }
 }

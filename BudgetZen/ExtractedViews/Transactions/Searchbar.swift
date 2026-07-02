@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct Searchbar: View {
-    @State private var query : String = ""
+    @Binding var query : String
     
     var body: some View {
         
@@ -17,17 +17,27 @@ struct Searchbar: View {
             
             TextField("Rechercher une transaction", text: $query, axis: .horizontal)
                 .lineLimit(1, reservesSpace: true)
+                .submitLabel(.search)
+                
         }
         .foregroundStyle(.balanceText)
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)
         .background{
             Capsule()
-                .fill(.balancedBg)
+                .fill(.balanceBg)
         }
     }
 }
 
 #Preview {
-    Searchbar()
+    struct PreviewSearchbar : View {
+        @State private var query : String  = ""
+          
+          var body : some View {
+              Searchbar(query: $query)
+          }
+      }
+      
+    return PreviewSearchbar()
 }
