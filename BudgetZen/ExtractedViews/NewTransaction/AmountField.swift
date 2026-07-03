@@ -8,26 +8,31 @@
 import SwiftUI
 
 struct AmountField: View {
-    @State private var amount : Double = 0.00
+    @State private var entry : String = ""
+    @State private var number : Double = 0.00
+    
     var isIncome : Bool = true
     
     var body: some View {
-        FieldStyle(fieldBorder: .balance, charLimit: 45, errorMessage: "Vous n'avez pas renseigné de montant"){ limit in
+        FieldStyle(fieldBorder: .balance, title: "Montant", charLimit: 20, errorMessage: "Vous n'avez pas renseigné de montant"){ limit in
+            
             HStack{
-                
                 Image(systemName: isIncome ? "plus" : "minus")
                     .symbolVariant(.circle.fill)
                 
-                TextField("Renseignez le montant de la transaction", value: $amount, format: .number.precision(.fractionLength(2)))
-                    .onChange(of: amount, {
-                        if String(amount).count > limit {
-                            amount = Double(String(amount).dropLast()) ?? amount
-                        }
+                TextField("Montant de la transaction", text: $entry, axis: .horizontal)
+                    .keyboardType(.decimalPad)
+                    .onChange(of: entry, {
+                        
+                        entry = String(entry.prefix(limit))
+                        
+                        number = validAmountQuery(entry, number)
+                        
                     })
                 
                 Image(systemName: "eurosign")
                     .font(.footnote)
-
+                
             }
         }
     }

@@ -78,3 +78,32 @@ func filterTransactions(_ allData : [Transaction],_ selectedType : String) -> [T
     
     return filteredResult
 }
+
+//Vérification de la saisie
+
+func validAmountQuery(_ query : String, _ amount : Double) -> Double {
+    var check : String = query
+    var decimal : Double = amount
+    
+    if check.count(where: { $0 == "," }) > 1 {
+        if let overflow = query.lastIndex(of: ",") {
+            check.remove(at: overflow)
+        }
+    }
+
+    decimal = Double(check.replacingOccurrences(of: ",", with: ".")) ?? decimal
+    
+    return decimal
+}
+
+func validDayQuery(_ query : String) -> String {
+    var check : String = query
+    
+    if check.count(where: { $0 == "," }) > 1 {
+        if let overflow = query.lastIndex(of: ",") {
+            check.remove(at: overflow)
+        }
+    }
+    
+    return check
+}

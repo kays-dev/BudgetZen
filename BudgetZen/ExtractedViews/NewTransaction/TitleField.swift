@@ -12,9 +12,10 @@ struct TitleField: View {
     
     var body: some View {
         
-        FieldStyle(fieldBorder: .balance, charLimit: 45, errorMessage: "Ce champs ne doit pas être vide"){ limit in
+        FieldStyle(fieldBorder: .balance, title: "Intitulé", charLimit: 45, errorMessage: "Ce champs ne doit pas être vide"){ limit in
             
             TextField("Renseignez l'intitulé de la transaction", text: $entry, axis: .horizontal)
+                .keyboardType(.asciiCapable)
                 .onChange(of: entry, {
                     entry = String(entry.prefix(limit))
                 })

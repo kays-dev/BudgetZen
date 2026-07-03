@@ -10,6 +10,7 @@ import SwiftUI
 struct FieldStyle<Content: View>: View {
     var fieldBorder : Color
     
+    var title : String
     var charLimit : Int
     
     var errorMessage : String
@@ -20,7 +21,7 @@ struct FieldStyle<Content: View>: View {
     var body: some View {
         
         VStack{
-            FieldCard(title: "Intitulé", borders: fieldBorder) {
+            FieldCard(title: title, borders: fieldBorder) {
                 
                 content(charLimit)
                     .multilineTextAlignment(.center)
@@ -38,7 +39,7 @@ struct FieldStyle<Content: View>: View {
 }
 
 #Preview {
-    FieldStyle(fieldBorder: .balance, charLimit: 45, errorMessage: "Ce champs ne doit pas être vide") { limit in
+    FieldStyle(fieldBorder: .balance, title: "Intitulé", charLimit: 45, errorMessage: "Ce champs ne doit pas être vide") { limit in
 
     }
 }
