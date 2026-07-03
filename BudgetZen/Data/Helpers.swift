@@ -62,9 +62,19 @@ extension View {
 func searchTransactions(_ allData : [Transaction],_ searchQuery : String) -> [Transaction] {
     var searchResult : [Transaction] = allData
     
-    if !searchQuery.isEmpty{
-         searchResult = allData.filter{ $0.title.localizedCaseInsensitiveContains(searchQuery) }
-    }
+    searchResult = allData.filter{ $0.title.localizedCaseInsensitiveContains(searchQuery) }
     
     return searchResult
+}
+
+func filterTransactions(_ allData : [Transaction],_ selectedType : String) -> [Transaction] {
+    var filteredResult : [Transaction] = allData
+    
+    if selectedType == "dépense" {
+        filteredResult = allData.filter{ $0.type.rawValue.lowercased() == "dépense" }
+    } else if selectedType == "revenu" {
+        filteredResult = allData.filter{ $0.type.rawValue.lowercased() == "revenu" }
+    }
+    
+    return filteredResult
 }

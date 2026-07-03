@@ -12,25 +12,81 @@ struct TransactionsListView: View {
     
     @State private var initialValues : [Transaction] = transactions.sorted{ $0.date > $1.date}
     
+    @State private var selectedFilter : String = "tous"
+    
+    @State private var results : [Transaction] = []
+    
+    private func applySearchAndFilters(){
+        var list = initialValues
+        
+        if !query.isEmpty {
+            list = searchTransactions(list, query)
+        }
+        
+        if !selectedFilter.isEmpty{
+            list = filterTransactions(list, selectedFilter)
+        }
+        
+        results = list
+    }
+    
     var body: some View {
         ViewStyle(title: "Toutes les transactions") {
             ScrollView{
                 VStack(spacing: 12){
-                    ForEach(searchTransactions(initialValues, query)){ transaction in
+                    ForEach(results){ transaction in
                         TransactionRow(transaction: transaction)
                     }
                 }
                 .frame(maxWidth: .infinity)
-            }
-            .safeAreaBar(edge: .top) {
-                HStack{
-                    Searchbar(query: $query)
-                        .padding(.bottom, 32)
+                .onChange(of: query) {
+                    applySearchAndFilters()
+                }
+                .onChange(of: selectedFilter) {
+                    applySearchAndFilters()
                 }
             }
+            .safeAreaBar(edge: .top) {
+                HStack(spacing: 16){
+                    Searchbar(query: $query)
+                    
+                    Menu {
+                        Text("Choisissez un filtre")
+                        
+                        Picker("Type de transaction",selection: $selectedFilter) {
+                            Text("Tous")
+                                .tag("tous")
+                            
+                            ForEach(Transaction.TransactionType.allCases, id: \.self){ type in
+                                Text("\(type.rawValue)s")
+                                    .tag(type.rawValue.lowercased())
+                                    .font(.headline)
+                            }
+                        }
+                        
+                    } label: {
+                        Image(systemName: "line.3.horizontal.decrease")
+                            .foregroundStyle(.bg)
+                            .font(.title)
+                            .padding(.vertical, 12)
+                            .padding(.horizontal, 6)
+                            .background{
+                                Circle()
+                                    .fill(.accent)
+                            }
+                    }
+                    .contentShape(Circle())
+                    .glassEffect(.regular, in : .circle)
+                    
+                }
+                .padding(.bottom, 32)
+            }
+            .task {
+                applySearchAndFilters()
+            }
+            
         }
         .scrollDisabled(true)
-
     }
 }
 

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 var transactions = [
     Transaction(title: "Salaire", amount: 1200.00, type: .income, category: .work, date: "28/06/2026"),
