@@ -80,7 +80,6 @@ func filterTransactions(_ allData : [Transaction],_ selectedType : String) -> [T
 }
 
 //Vérification de la saisie
-
 func validAmountQuery(_ query : String, _ amount : Double) -> Double {
     var check : String = query
     var decimal : Double = amount
@@ -90,20 +89,37 @@ func validAmountQuery(_ query : String, _ amount : Double) -> Double {
             check.remove(at: overflow)
         }
     }
-
+    
     decimal = Double(check.replacingOccurrences(of: ",", with: ".")) ?? decimal
     
     return decimal
 }
 
-func validDayQuery(_ query : String) -> String {
-    var check : String = query
+func validDateQuery(_ dayQuery : String,_ monthQuery : String,_ yearQuery : String) -> [String] {
     
-    if check.count(where: { $0 == "," }) > 1 {
-        if let overflow = query.lastIndex(of: ",") {
-            check.remove(at: overflow)
+    var days : [String] = []
+    let monthOf31Days : [String] = ["01", "03", "05", "07", "08", "10", "12"]
+    
+    if monthQuery == "02"{
+        
+        if let year = Int(yearQuery){
+            
+            if year % 4 == 1 || year % 400 == 1 {
+                
+                days = (1...29).map{ String($0).count < 2 ? "0" + String($0) : String($0)}
+            } else {
+                
+                days = (1...28).map{ String($0).count < 2 ? "0" + String($0) : String($0)}
+            }
         }
+        
+    } else if monthOf31Days.contains(monthQuery){
+        days = (1...31).map{ String($0).count < 2 ? "0" + String($0) : String($0)}
+        
+    } else {
+        days = (1...30).map{ String($0).count < 2 ? "0" + String($0) : String($0)}
+        
     }
-    
-    return check
+
+    return days
 }
