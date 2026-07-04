@@ -8,13 +8,15 @@
 import SwiftUI
 
 struct TitleField: View {
-    @State private var entry : String = ""
+    @Binding var entry : String
+    
+    var isValid : Bool
     
     var body: some View {
         
-        FieldStyle(fieldBorder: .balance, title: "Intitulé", charLimit: 45, errorMessage: "Ce champs ne doit pas être vide"){ limit in
+        FieldStyle(fieldBorder: .balance, title: "Titre", charLimit: 45, errorMessage: "Veuillez renseigner le titre de la transaction", isValid: isValid){ limit in
             
-            TextField("Renseignez l'intitulé de la transaction", text: $entry, axis: .horizontal)
+            TextField("Ex: Salle de sport", text: $entry, axis: .horizontal)
                 .keyboardType(.asciiCapable)
                 .onChange(of: entry, {
                     entry = String(entry.prefix(limit))
@@ -25,5 +27,5 @@ struct TitleField: View {
 }
 
 #Preview {
-    TitleField()
+    TitleField(entry: .constant(""), isValid : false)
 }

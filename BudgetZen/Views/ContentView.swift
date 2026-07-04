@@ -9,24 +9,23 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        DateField()
-//        TabView{
-//            Tab("Accueil", systemImage: "square.grid.2x2.fill") {
-//                DashboardView()
-//            }
-//            
-//            Tab("Transactions", systemImage: "eurosign.arrow.trianglehead.counterclockwise.rotate.90") {
-//                TransactionsListView()
-//            }
-//            
-//            Tab("Nouveau", systemImage: "rectangle.and.pencil.and.ellipsis") {
-//                
-//            }
-//            
-//            Tab("Statistiques", systemImage: "waveform.path.ecg") {
-//                
-//            }
-//        }
+        TabView{
+            Tab("Accueil", systemImage: "square.grid.2x2.fill") {
+                DashboardView()
+            }
+            
+            Tab("Transactions", systemImage: "eurosign.arrow.trianglehead.counterclockwise.rotate.90") {
+                TransactionsListView()
+            }
+            
+            Tab("Nouveau", systemImage: "rectangle.and.pencil.and.ellipsis") {
+                NewTransaction()
+            }
+            
+            Tab("Statistiques", systemImage: "waveform.path.ecg") {
+                
+            }
+        }
     }
 }
 

@@ -84,7 +84,6 @@ struct TransactionsListView: View {
             .task {
                 applySearchAndFilters()
             }
-            
         }
         .scrollDisabled(true)
     }

@@ -9,7 +9,10 @@ import SwiftUI
 
 struct CategoryPickerField: View {
     
-    @State private var entry : String = "Choix"
+    @Binding var entry : String
+    
+    var isValid : Bool
+    
     var category : Transaction.Category? {
         Transaction.Category.allCases.first(where: {$0.rawValue == entry })
     }
@@ -20,7 +23,7 @@ struct CategoryPickerField: View {
     
     var body: some View {
         
-        FieldStyle(fieldBorder: colors.shadow, title: "Catégorie de la transaction", charLimit: 20, errorMessage: "Vous n'avez pas renseigné de montant"){ limit in
+        FieldStyle(fieldBorder: colors.shadow, title: "Catégorie", charLimit: 0, errorMessage: "Veuillez choisir la catégorie de la transaction", isValid: isValid){ limit in
             
             HStack(spacing: -4){
                 Image(systemName: category != nil ? category!.getCategoryIcon() : "")
@@ -51,5 +54,5 @@ struct CategoryPickerField: View {
 
 
 #Preview {
-    CategoryPickerField()
+    CategoryPickerField(entry: .constant("Choix"), isValid: false)
 }

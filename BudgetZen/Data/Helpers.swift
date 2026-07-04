@@ -123,3 +123,6 @@ func validDateQuery(_ dayQuery : String,_ monthQuery : String,_ yearQuery : Stri
 
     return days
 }
+
+//Validation du formulaire
+

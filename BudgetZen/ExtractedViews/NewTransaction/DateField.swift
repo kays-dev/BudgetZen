@@ -8,24 +8,26 @@
 import SwiftUI
 
 struct DateField: View {
-    @State private var entryDay : String = "01"
+    var isValid : Bool
+    
+    @Binding var entryDay : String
     var dayValues : [String] {
-        validDateQuery(entryDay, entryMonth, entryYear)
+        validDateQuery(entryDay, entryMonth, yearValue)
     }
     
-    @State private var entryMonth : String = "01"
+    @Binding var entryMonth : String
     let monthValues : [String] = (1...12).map{ String($0).count < 2 ? "0" + String($0) : String($0) }
-    let monthOf31Days : [String] = ["01", "03", "05", "07", "08", "10", "12"]
-    
-    @State private var entryYear : String = "2026"
-    let yearValue : String = "2026"
+
+    let yearValue : String
     
     var entry : String {
-        entryDay + entryMonth + entryYear
+        entryDay + entryMonth + yearValue
     }
     
+    @Binding var hasChanged : Bool
+    
     var body: some View {
-        FieldStyle(fieldBorder: .balance, title: "Date de la transaction", charLimit: 0, errorMessage: "Vous n'avez pas renseigné de date"){ limit in
+        FieldStyle(fieldBorder: .balance, title: "Date", charLimit: 0, errorMessage: "Veuillez sélectionner une nouvelle date", isValid: isValid){ limit in
             
             HStack{
                 
@@ -37,6 +39,9 @@ struct DateField: View {
                 }
                 .pickerStyle(.wheel)
                 .frame(maxWidth: .infinity)
+                .onChange(of: entryDay) {
+                    hasChanged = true
+                }
                 
                 Text("/")
                 
@@ -48,6 +53,9 @@ struct DateField: View {
                 }
                 .pickerStyle(.wheel)
                 .frame(maxWidth: .infinity)
+                .onChange(of: entryMonth) {
+                    hasChanged = true
+                }
                 
                 Text("/")
 
@@ -58,14 +66,12 @@ struct DateField: View {
                     .frame(maxWidth: .infinity)
    
             }
-            .frame(height: 80)
-            .mask {
-                RoundedRectangle(cornerRadius: 28)
-            }
+            .frame(height: 92)
+            .padding(.top, -32)
         }
     }
 }
 
 #Preview {
-    DateField()
+    DateField(isValid: false, entryDay: .constant("01"), entryMonth: .constant("01"), yearValue: "2026", hasChanged: .constant(false))
 }

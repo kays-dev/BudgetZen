@@ -8,24 +8,36 @@
 import SwiftUI
 
 struct AmountField: View {
-    @State private var entry : String = ""
-    @State private var number : Double = 0.00
-    
-    var colors : (foreground: Color, shadow: Color) {
-        isIncome ? (foreground: Transaction.TransactionType.income.getTypeStyle().foreground, shadow: Transaction.TransactionType.income.getTypeStyle().shadow) : (foreground: Transaction.TransactionType.expense.getTypeStyle().foreground, shadow: Transaction.TransactionType.expense.getTypeStyle().shadow)
+    @Binding var entry : String
+    @Binding var number : Double
+
+    var isIncome : Bool?
+    var type : Transaction.TransactionType? {
+        if isIncome  != nil {
+            return Transaction.TransactionType.income
+        } else {
+            return nil
+        }
     }
     
-    var isIncome : Bool = true
+    var colors : (foreground: Color, shadow: Color) {
+        if let selectedType = type {
+                return (foreground: selectedType.getTypeStyle().foreground, shadow: selectedType.getTypeStyle().shadow)
+        } else {
+            return (foreground: .balanceText, shadow: .balance)
+        }
+    }
     
-    @Binding var isValid : Bool
+    var isValid : Bool
     
     var body: some View {
-        FieldStyle(fieldBorder: isIncome ? Transaction.TransactionType.income.getTypeStyle().border : Transaction.TransactionType.expense.getTypeStyle().border, title: "Montant de la transaction", charLimit: 20, errorMessage: "Vous n'avez pas renseigné de montant", content : { limit in
+        FieldStyle(fieldBorder: isIncome != nil ? type!.getTypeStyle().border : .balance, title: "Montant", charLimit: 20, errorMessage: "Veuillez renseigner le montant de la transaction", isValid: isValid){ limit in
             
             HStack{
-                Image(systemName: isIncome ? "plus" : "minus")
+                Image(systemName: isIncome != nil ? type!.getTypeOperator() : "pencil")
                     .symbolVariant(.circle.fill)
-                    .mainInfoStyle(infoColorSet: (foreground: colors.foreground, shadow: colors.shadow))
+                    .font(.none)
+                    .mainInfoStyle(infoColorSet: colors)
                 
                 TextField("0,00", text: $entry, axis: .horizontal)
                     .keyboardType(.decimalPad)
@@ -38,13 +50,13 @@ struct AmountField: View {
                     })
                 
                 Image(systemName: "eurosign")
-                    .font(.headline)
-                
+                    .font(.none)
+
             }
-        })
+        }
     }
 }
 
 #Preview {
-    AmountField(isValid: .constant(true))
+    AmountField(entry: .constant(""), number: .constant(0.00), isIncome: nil, isValid: false)
 }

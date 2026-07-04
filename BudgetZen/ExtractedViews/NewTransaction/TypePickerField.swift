@@ -9,11 +9,12 @@ import SwiftUI
 
 struct TypePickerField: View {
     
-    @State private var entry : String = "Choix"
+    @Binding var entry : String
     
-
+    var isValid : Bool
+    
     var type : Transaction.TransactionType? {
-        Transaction.TransactionType.allCases.first(where: {$0.rawValue == entry })
+        Transaction.TransactionType.allCases.first(where: { $0.rawValue == entry })
     }
     
     var colors : (foreground: Color, shadow: Color) {
@@ -34,7 +35,7 @@ struct TypePickerField: View {
     
     var body: some View {
         
-        FieldStyle(fieldBorder: colors.shadow, title: "Type de la transaction", charLimit: 20, errorMessage: "Vous n'avez pas renseigné de montant"){ limit in
+        FieldStyle(fieldBorder: colors.shadow, title: "Type", charLimit: 0, errorMessage: "Veuillez choisir le type de la transaction", isValid: isValid){ limit in
             
             HStack(spacing: -4){
                 Image(systemName: type != nil ? type!.getTypeIcon() : "")
@@ -64,5 +65,5 @@ struct TypePickerField: View {
 }
 
 #Preview {
-    TypePickerField()
+    TypePickerField(entry: .constant("Choix"), isValid: false)
 }
