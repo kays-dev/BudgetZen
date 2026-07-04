@@ -11,16 +11,23 @@ struct AmountField: View {
     @State private var entry : String = ""
     @State private var number : Double = 0.00
     
+    var colors : (foreground: Color, shadow: Color) {
+        isIncome ? (foreground: Transaction.TransactionType.income.getTypeStyle().foreground, shadow: Transaction.TransactionType.income.getTypeStyle().shadow) : (foreground: Transaction.TransactionType.expense.getTypeStyle().foreground, shadow: Transaction.TransactionType.expense.getTypeStyle().shadow)
+    }
+    
     var isIncome : Bool = true
     
+    @Binding var isValid : Bool
+    
     var body: some View {
-        FieldStyle(fieldBorder: .balance, title: "Montant", charLimit: 20, errorMessage: "Vous n'avez pas renseigné de montant"){ limit in
+        FieldStyle(fieldBorder: isIncome ? Transaction.TransactionType.income.getTypeStyle().border : Transaction.TransactionType.expense.getTypeStyle().border, title: "Montant de la transaction", charLimit: 20, errorMessage: "Vous n'avez pas renseigné de montant", content : { limit in
             
             HStack{
                 Image(systemName: isIncome ? "plus" : "minus")
                     .symbolVariant(.circle.fill)
+                    .mainInfoStyle(infoColorSet: (foreground: colors.foreground, shadow: colors.shadow))
                 
-                TextField("Montant de la transaction", text: $entry, axis: .horizontal)
+                TextField("0,00", text: $entry, axis: .horizontal)
                     .keyboardType(.decimalPad)
                     .onChange(of: entry, {
                         
@@ -31,13 +38,13 @@ struct AmountField: View {
                     })
                 
                 Image(systemName: "eurosign")
-                    .font(.footnote)
+                    .font(.headline)
                 
             }
-        }
+        })
     }
 }
 
 #Preview {
-    AmountField()
+    AmountField(isValid: .constant(true))
 }

@@ -25,7 +25,7 @@ struct DateField: View {
     }
     
     var body: some View {
-        FieldStyle(fieldBorder: .balance, title: "Date", charLimit: 0, errorMessage: "Vous n'avez pas renseigné de date"){ limit in
+        FieldStyle(fieldBorder: .balance, title: "Date de la transaction", charLimit: 0, errorMessage: "Vous n'avez pas renseigné de date"){ limit in
             
             HStack{
                 
