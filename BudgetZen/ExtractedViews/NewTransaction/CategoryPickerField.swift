@@ -33,7 +33,7 @@ struct CategoryPickerField: View {
                 Picker("Catégorie", selection: $entry) {
                     
                     Text("Choisir une catégorie")
-                        .tag("Choix")
+                        .tag("")
                     ForEach(Transaction.Category.allCases, id: \.self){ category in
                         
                         Text(category.rawValue)

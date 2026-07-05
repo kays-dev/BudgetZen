@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct BudgetMessage: View {
-    var balance : Double = getBalance()
+    var balance : Double
     
     var body: some View {
         HStack(alignment: .lastTextBaseline, spacing: 8){
@@ -33,5 +33,5 @@ struct BudgetMessage: View {
 }
 
 #Preview {
-    BudgetMessage()
+    BudgetMessage(balance: getBalance(transactions))
 }

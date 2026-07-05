@@ -13,8 +13,8 @@ struct AmountField: View {
 
     var isIncome : Bool?
     var type : Transaction.TransactionType? {
-        if isIncome  != nil {
-            return Transaction.TransactionType.income
+        if isIncome != nil {
+            return isIncome! ? Transaction.TransactionType.income : Transaction.TransactionType.expense
         } else {
             return nil
         }

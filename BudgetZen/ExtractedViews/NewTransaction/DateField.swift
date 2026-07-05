@@ -20,10 +20,6 @@ struct DateField: View {
 
     let yearValue : String
     
-    var entry : String {
-        entryDay + entryMonth + yearValue
-    }
-    
     @Binding var hasChanged : Bool
     
     var body: some View {

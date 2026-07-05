@@ -10,14 +10,12 @@ import SwiftUI
 struct TransactionsListView: View {
     @State private var query : String = ""
     
-    @State private var initialValues : [Transaction] = transactions.sorted{ $0.date > $1.date}
-    
     @State private var selectedFilter : String = "tous"
     
     @State private var results : [Transaction] = []
-    
+ 
     private func applySearchAndFilters(){
-        var list = initialValues
+        var list = transactions.sorted{ formatDate($0.date) > formatDate($1.date)}
         
         if !query.isEmpty {
             list = searchTransactions(list, query)
@@ -32,7 +30,7 @@ struct TransactionsListView: View {
     
     var body: some View {
         ViewStyle(title: "Toutes les transactions") {
-            ScrollView{
+            VStack{
                 VStack(spacing: 12){
                     ForEach(results){ transaction in
                         TransactionRow(transaction: transaction)
@@ -46,46 +44,45 @@ struct TransactionsListView: View {
                     applySearchAndFilters()
                 }
             }
-            .safeAreaBar(edge: .top) {
-                HStack(spacing: 16){
-                    Searchbar(query: $query)
-                    
-                    Menu {
-                        Text("Choisissez un filtre")
-                        
-                        Picker("Type de transaction",selection: $selectedFilter) {
-                            Text("Tous")
-                                .tag("tous")
-                            
-                            ForEach(Transaction.TransactionType.allCases, id: \.self){ type in
-                                Text("\(type.rawValue)s")
-                                    .tag(type.rawValue.lowercased())
-                                    .font(.headline)
-                            }
-                        }
-                        
-                    } label: {
-                        Image(systemName: "line.3.horizontal.decrease")
-                            .foregroundStyle(.bg)
-                            .font(.title)
-                            .padding(.vertical, 12)
-                            .padding(.horizontal, 6)
-                            .background{
-                                Circle()
-                                    .fill(.accent)
-                            }
-                    }
-                    .contentShape(Circle())
-                    .glassEffect(.regular, in : .circle)
-                    
-                }
-                .padding(.bottom, 32)
-            }
             .task {
                 applySearchAndFilters()
             }
+        } messages: {
+            AnyView(
+                HStack(spacing: 16){
+                Searchbar(query: $query)
+                
+                Menu {
+                    Text("Choisissez un filtre")
+                    
+                    Picker("Type de transaction",selection: $selectedFilter) {
+                        Text("Tous")
+                            .tag("tous")
+                        
+                        ForEach(Transaction.TransactionType.allCases, id: \.self){ type in
+                            Text("\(type.rawValue)s")
+                                .tag(type.rawValue.lowercased())
+                                .font(.headline)
+                        }
+                    }
+                    
+                } label: {
+                    Image(systemName: "line.3.horizontal.decrease")
+                        .foregroundStyle(.bg)
+                        .font(.title)
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 6)
+                        .background{
+                            Circle()
+                                .fill(.accent)
+                        }
+                }
+                .contentShape(Circle())
+                .glassEffect(.regular, in : .circle)
+                
+            }
+                )
         }
-        .scrollDisabled(true)
     }
 }
 

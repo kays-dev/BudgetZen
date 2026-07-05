@@ -21,8 +21,8 @@ struct ViewStyle<Content: View>: View {
                 VStack(spacing: 32){
                     
                     content()
-                        .padding(.top, 32)
-                        
+                    
+                    
                 }
                 .frame(maxWidth: .infinity)
                 .toolbar{
@@ -35,27 +35,30 @@ struct ViewStyle<Content: View>: View {
                         }
                     }
                 }
-                .safeAreaInset(edge: .top) {
-                    VStack(spacing: 24){
-                        VStack(alignment: .leading, spacing : 4){
-                            Text(title)
-                                .font(.title)
-                                .bold()
-                                .foregroundStyle(.title)
-                            
-                            if subtitle != nil{
-                                Text(subtitle!)
-                                    .font(.subheadline)
-                                    .foregroundStyle(.secondaryText)
-                            }
-                        }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                        messages()
-                    }
-                }
                 .padding(.horizontal, 20)
                 .padding(.bottom, 24)
+            }
+            .scrollIndicators(.hidden)
+            .safeAreaBar(edge: .top) {
+                VStack(spacing: 24){
+                    VStack(alignment: .leading, spacing : 4){
+                        Text(title)
+                            .font(.title)
+                            .bold()
+                            .foregroundStyle(.title)
+                        
+                        if subtitle != nil{
+                            Text(subtitle!)
+                                .font(.subheadline)
+                                .foregroundStyle(.secondaryText)
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    
+                    messages()
+                }
+                .padding(.bottom, 32)
+                .padding(.horizontal, 20)
             }
             .navigationBarTitleDisplayMode(.inline)
             .frame(maxWidth: .infinity)
@@ -66,8 +69,8 @@ struct ViewStyle<Content: View>: View {
 
 #Preview {
     ViewStyle(isDashboard: true, title: "Tableau de bord", subtitle: "Bonjour à toi ! Prêt à suivre ton budget ?") {
-        DashboardGrid()
+        Text("hi")
     } messages : {
-        BudgetMessage().myViewMessage()
+        BudgetMessage(balance: getBalance(transactions)).myViewMessage()
     }
 }

@@ -16,29 +16,41 @@ enum InfoType : String, CaseIterable {
 }
 
 //Montants totaux
-func getTotalIncomes() -> Double {
-    return transactions.filter{ $0.type == .income }.map{ $0.amount }.reduce(0, +)
+func getTotalIncomes(_ array : [ Transaction ]) -> Double {
+    return array.filter{ $0.type == .income }.map{ $0.amount }.reduce(0, +)
 }
 
-func getTotalExpenses() -> Double {
-    return transactions.filter{ $0.type == .expense }.map{ $0.amount }.reduce(0, +)
+func getTotalExpenses(_ array : [ Transaction ]) -> Double {
+    return array.filter{ $0.type == .expense }.map{ $0.amount }.reduce(0, +)
 }
 
-func getBalance() -> Double {
-    return getTotalIncomes() - getTotalExpenses()
+func getBalance(_ array : [ Transaction ]) -> Double {
+    return getTotalIncomes(array) - getTotalExpenses(array)
 }
 
 //Transactions totales
-func getIncomeTransactions() -> Int {
-    return transactions.filter{ $0.type == .income }.count
+func getIncomeTransactions(_ array : [ Transaction ]) -> Int {
+    return array.filter{ $0.type == .income }.count
 }
 
-func getExpenseTransactions() -> Int {
-    return transactions.filter{ $0.type == .expense }.count
+func getExpenseTransactions(_ array : [ Transaction ]) -> Int {
+    return array.filter{ $0.type == .expense }.count
 }
 
-func getTotalTransactions() -> Int {
-    return getIncomeTransactions() + getExpenseTransactions()
+func getTotalTransactions(_ array : [ Transaction ]) -> Int {
+    return getIncomeTransactions(array) + getExpenseTransactions(array)
+}
+
+func actualizeDashboard(_ array : [ Transaction ]) -> (balance : Double, totalTransactions : Int, incomes : Double, incomeTransactions : Int, expenses : Double, expenseTransactions : Int){
+    
+    let balance = getBalance(array)
+    let allTransactions = getTotalTransactions(array)
+    let allIncomes = getTotalIncomes(array)
+    let incomeTransactions = getIncomeTransactions(array)
+    let allExpenses = getTotalExpenses(array)
+    let expenseTransactions = getExpenseTransactions(array)
+    
+    return (balance : balance, totalTransactions : allTransactions, incomes : allIncomes, incomeTransactions : incomeTransactions, expenses : allExpenses, expenseTransactions : expenseTransactions)
 }
 
 //Gestion des messages
@@ -124,5 +136,59 @@ func validDateQuery(_ dayQuery : String,_ monthQuery : String,_ yearQuery : Stri
     return days
 }
 
-//Validation du formulaire
+func validTypeQuery(_ type : String) -> Transaction.TransactionType {
+    return Transaction.TransactionType.allCases.first(where: { $0.rawValue == type })!
+}
 
+func validCategoryQuery(_ category : String) -> Transaction.Category {
+    return Transaction.Category.allCases.first(where: { $0.rawValue == category })!
+}
+
+//Validation du formulaire
+func validTransactionForm(_ title : String, _ amount : Double, _ type : String, _ category : String, _ date : String) -> (title : Bool, amount : Bool, type : Bool, category : Bool, date : Bool){
+    
+    var validTitle : Bool = true
+    var validAmount : Bool = true
+    var validType : Bool = true
+    var validCategory : Bool = true
+    var validDate : Bool = true
+    
+    if title.isEmpty {
+        validTitle = false
+    }
+    
+    if amount <= 0.00 {
+        validAmount = false
+    }
+
+    if type.isEmpty {
+        validType = false
+    }
+    
+    if category.isEmpty {
+        validCategory = false
+    }
+    
+    if date.isEmpty {
+        validDate = false
+    }
+    
+    return (title : validTitle, amount : validAmount, type : validType, category : validCategory, date : validDate)
+}
+
+func addNewTransaction(_ title : String, _ amount : Double, _ type : String, _ category : String, _ date : String){
+    
+    let type = validTypeQuery(type)
+    let category = validCategoryQuery(category)
+    
+    let newTransaction : Transaction = Transaction(title: title, amount: amount, type: type, category: category, date: date)
+    
+    transactions.append(newTransaction)
+}
+
+func formatDate (_ date : String) -> Date{
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd/MM/yyyy"
+    
+    return dateFormatter.date(from: date)!
+}

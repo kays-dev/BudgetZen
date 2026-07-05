@@ -10,27 +10,35 @@ import SwiftUI
 struct DashboardGrid: View {
     let columns = [GridItem(.flexible(), spacing: 12), GridItem(.flexible())]
     
+    var balance : Double
+    var incomes : Double
+    var expenses : Double
+    var transactionsCount : Int
+    var incomesCount : Int
+    var expensesCount : Int
+    
     var body: some View {
         VStack(spacing: 12) {
             
-            InfoCard(info: (name: "Solde actuel", detail: (amount: getBalance(), number: nil, text: nil), type: .general))
+            InfoCard(info: (name: "Solde actuel", detail: (amount: balance, number: nil, text: nil), type: .general))
             
             LazyVGrid(columns: columns, spacing: 12) {
                 
-                InfoCard(info: (name: "Total des revenus", detail: (amount: getTotalIncomes(), number: nil, text: nil), type: .income))
+                InfoCard(info: (name: "Total des revenus", detail: (amount: incomes, number: nil, text: nil), type: .income))
                 
-                InfoCard(info: (name: "Total des dépenses", detail: (amount: getTotalExpenses(), number: nil, text: nil), type: .expense))
+                InfoCard(info: (name: "Total des dépenses", detail: (amount: expenses, number: nil, text: nil), type: .expense))
                 
-                InfoCard(info: (name: nil, detail: (amount: nil, number: getIncomeTransactions(), text: nil), type: .income))
+                InfoCard(info: (name: nil, detail: (amount: nil, number: incomesCount, text: nil), type: .income))
                 
-                InfoCard(info: (name: nil, detail: (amount: nil, number: getExpenseTransactions(), text: nil), type: .expense))
+                InfoCard(info: (name: nil, detail: (amount: nil, number: expensesCount, text: nil), type: .expense))
             }
             
-            InfoCard(info: (name: "Total", detail: (amount: nil, number: getTotalTransactions(), text: nil), type: .general))
+            InfoCard(info: (name: "Total", detail: (amount: nil, number: transactionsCount, text: nil), type: .general))
         }
+
     }
 }
 
 #Preview {
-    DashboardGrid()
+    DashboardGrid(balance: getBalance(transactions), incomes: getTotalIncomes(transactions), expenses: getTotalExpenses(transactions), transactionsCount: getTotalTransactions(transactions), incomesCount: getIncomeTransactions(transactions), expensesCount: getExpenseTransactions(transactions))
 }

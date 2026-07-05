@@ -44,7 +44,7 @@ struct TypePickerField: View {
                 
                 Picker("Type",selection: $entry) {
                     Text("Choisir un type")
-                        .tag("Choix")
+                        .tag("")
                     ForEach(Transaction.TransactionType.allCases, id: \.self){ type in
                         
                         Text(type.rawValue)
