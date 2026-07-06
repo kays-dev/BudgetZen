@@ -16,14 +16,14 @@ struct CardStyle: ViewModifier {
             .frame(maxWidth: .infinity)
             .foregroundStyle(.primaryText)
             .background{
-                RoundedRectangle(cornerRadius: 16)
+                RoundedRectangle(cornerRadius: 20)
                     .fill(cardBorder)
                     .overlay{
                         ZStack{
-                            RoundedRectangle(cornerRadius: 16)
+                            RoundedRectangle(cornerRadius: 20)
                                 .fill(.bg)
                                 
-                            RoundedRectangle(cornerRadius: 16)
+                            RoundedRectangle(cornerRadius: 20)
                                 .fill(.cardBg)
                         }
                         .padding(.top, isTransaction ? 1 : 4)

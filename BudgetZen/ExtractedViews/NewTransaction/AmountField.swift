@@ -45,7 +45,13 @@ struct AmountField: View {
                         
                         entry = String(entry.prefix(limit))
                         
-                        number = validAmountQuery(entry, number)
+                        if entry.count(where: { $0 == "," }) > 1 {
+                            if let overflow = entry.lastIndex(of: ",") {
+                                entry.remove(at: overflow)
+                            }
+                        }
+                    
+                        number = Double(entry.replacingOccurrences(of: ",", with: ".")) ?? number
                         
                     })
                 
