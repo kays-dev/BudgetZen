@@ -8,12 +8,22 @@
 import Foundation
 import SwiftUI
 
+//************ COMPOSANTS
+
 //Types d'information
 enum InfoType : String, CaseIterable {
-    case general = "Général"
+    case global = "Global"
     case income = "Revenu"
     case expense = "Dépense"
 }
+
+extension View {
+    func myViewMessage() -> AnyView {
+        AnyView(self)
+    }
+}
+
+//************ TABLEAU DE BORD
 
 //Montants totaux
 func getTotalIncomes(_ array : [ Transaction ]) -> Double {
@@ -28,7 +38,7 @@ func getBalance(_ array : [ Transaction ]) -> Double {
     return getTotalIncomes(array) - getTotalExpenses(array)
 }
 
-//Transactions totales
+//Totals des transactions
 func getIncomeTransactions(_ array : [ Transaction ]) -> Int {
     return array.filter{ $0.type == .income }.count
 }
@@ -64,11 +74,7 @@ func getBudgetMessage(_ balance : Double) -> (message: String, symbol: String, b
     }
 }
 
-extension View {
-    func myViewMessage() -> AnyView {
-        AnyView(self)
-    }
-}
+//************ LISTE
 
 //Filtrage de la liste
 func searchTransactions(_ allData : [Transaction],_ searchQuery : String) -> [Transaction] {
@@ -90,6 +96,8 @@ func filterTransactions(_ allData : [Transaction],_ selectedType : String) -> [T
     
     return filteredResult
 }
+
+//************ FORMULAIRE
 
 //Vérification de la saisie
 func validAmountQuery(_ query : String, _ amount : Double) -> Double {
@@ -191,4 +199,37 @@ func formatDate (_ date : String) -> Date{
     dateFormatter.dateFormat = "dd/MM/yyyy"
     
     return dateFormatter.date(from: date)!
+}
+
+//************ STATISTIQUES
+
+//Catégorie la plus utilisée
+func getMostUsedCategory(_ array : [Transaction]) -> String {
+    
+    let categories : [Transaction.Category] = array.map{ $0.category }.sorted{ $0.rawValue > $1.rawValue }
+    
+    var splitedArray : [[Transaction.Category]] = []
+    var inCategory : [Transaction.Category]  = []
+    
+    for i in 1..<categories.count {
+        
+        if categories[ i ] == categories[ i - 1] {
+            
+            inCategory.append(categories[ i ])
+            
+        } else {
+            
+            inCategory.append(categories[ i ])
+            splitedArray.append(inCategory)
+            
+            inCategory = []
+        }
+        
+    }
+    
+    let counts : [Int] = splitedArray.map{ $0.count }
+    
+    let maxCountCategory : [Transaction.Category] = splitedArray[splitedArray.firstIndex( where : { $0.count == counts.max()! } ) ?? 0]
+    
+    return maxCountCategory.first!.rawValue
 }

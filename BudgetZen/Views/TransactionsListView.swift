@@ -47,7 +47,7 @@ struct TransactionsListView: View {
             .task {
                 applySearchAndFilters()
             }
-        } messages: {
+        } areaBarOption: {
             AnyView(
                 HStack(spacing: 16){
                 Searchbar(query: $query)

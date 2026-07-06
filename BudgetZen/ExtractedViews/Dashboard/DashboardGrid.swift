@@ -20,7 +20,7 @@ struct DashboardGrid: View {
     var body: some View {
         VStack(spacing: 12) {
             
-            InfoCard(info: (name: "Solde actuel", detail: (amount: balance, number: nil, text: nil), type: .general))
+            InfoCard(info: (name: "Solde actuel", detail: (amount: balance, number: nil, text: nil), type: .global))
             
             LazyVGrid(columns: columns, spacing: 12) {
                 
@@ -33,7 +33,7 @@ struct DashboardGrid: View {
                 InfoCard(info: (name: nil, detail: (amount: nil, number: expensesCount, text: nil), type: .expense))
             }
             
-            InfoCard(info: (name: "Total", detail: (amount: nil, number: transactionsCount, text: nil), type: .general))
+            InfoCard(info: (name: "Total", detail: (amount: nil, number: transactionsCount, text: nil), type: .global))
         }
 
     }

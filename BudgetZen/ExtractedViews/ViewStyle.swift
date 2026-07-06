@@ -13,7 +13,7 @@ struct ViewStyle<Content: View>: View {
     var subtitle : String?
     
     @ViewBuilder var content: () -> Content
-    var messages: () -> AnyView = { AnyView(EmptyView()) }
+    var areaBarOption: () -> AnyView = { AnyView(EmptyView()) }
     
     var body: some View {
         NavigationStack{
@@ -55,7 +55,7 @@ struct ViewStyle<Content: View>: View {
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    messages()
+                    areaBarOption()
                 }
                 .padding(.bottom, 32)
                 .padding(.horizontal, 20)
@@ -70,7 +70,7 @@ struct ViewStyle<Content: View>: View {
 #Preview {
     ViewStyle(isDashboard: true, title: "Tableau de bord", subtitle: "Bonjour à toi ! Prêt à suivre ton budget ?") {
         Text("hi")
-    } messages : {
+    } areaBarOption : {
         BudgetMessage(balance: getBalance(transactions)).myViewMessage()
     }
 }

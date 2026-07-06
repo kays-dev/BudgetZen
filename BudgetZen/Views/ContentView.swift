@@ -23,7 +23,7 @@ struct ContentView: View {
             }
             
             Tab("Statistiques", systemImage: "waveform.path.ecg") {
-                
+                StatisticBoardView()
             }
         }
     }

@@ -12,6 +12,8 @@ struct MainInfo: View {
     var numberInfo : Int? = nil
     var textInfo : String? = nil
     
+    var isStatistic : Bool
+    
     let infoTypeColors : (foreground: Color, shadow: Color)
     
     var body: some View {
@@ -29,8 +31,10 @@ struct MainInfo: View {
                     Text("\(integerInfo)")
                         .mainInfoStyle(infoColorSet: infoTypeColors)
                     
+                if !isStatistic {
                     Text("transactions")
                         .font(.footnote)
+                }
 
             } else if let stringInfo = textInfo {
 
@@ -45,5 +49,5 @@ struct MainInfo: View {
 }
 
 #Preview {
-    MainInfo(infoTypeColors: (foreground: .balanceText, shadow: .balance))
+    MainInfo(isStatistic: false, infoTypeColors: (foreground: .balanceText, shadow: .balance))
 }
