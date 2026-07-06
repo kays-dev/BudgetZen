@@ -13,7 +13,7 @@ struct DashboardView: View {
     var body: some View {
         ViewStyle(isDashboard: true, title: "Tableau de bord", subtitle: "Bonjour à toi ! Prêt à suivre ton budget ?") {
             DashboardGrid(balance: infos.balance, incomes: infos.incomes, expenses: infos.expenses, transactionsCount: infos.totalTransactions, incomesCount: infos.incomeTransactions, expensesCount: infos.expenseTransactions)
-        } areaBarOption : {
+        } messages : {
             BudgetMessage(balance: infos.balance).myViewMessage()
         }
         .onChange(of: transactions) { _, newValue in

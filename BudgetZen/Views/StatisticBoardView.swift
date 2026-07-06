@@ -19,6 +19,8 @@ struct StatisticBoardView: View {
             
             ExpenseSection(expense: statistics.expenses, maxExpense: statistics.maxExpense, averageExpense: statistics.averageExpense, transaction: statistics.expenseTransactions)
 
+        } messages: {
+            AdviceMessage().myViewMessage()
         }
         .onChange(of: transactions) { _, newValue in
             statistics = actualizeStatistics(newValue)

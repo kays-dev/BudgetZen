@@ -14,11 +14,14 @@ struct ViewStyle<Content: View>: View {
     
     @ViewBuilder var content: () -> Content
     var areaBarOption: () -> AnyView = { AnyView(EmptyView()) }
+    var messages: () -> AnyView = { AnyView(EmptyView()) }
     
     var body: some View {
         NavigationStack{
             ScrollView{
                 VStack(spacing: 32){
+                    
+                    messages()
                     
                     content()
                     

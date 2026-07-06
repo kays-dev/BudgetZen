@@ -12,14 +12,7 @@ struct BudgetMessage: View {
     
     var body: some View {
         HStack(alignment: .lastTextBaseline, spacing: 8){
-            Image(systemName: "\(getBudgetMessage(balance).symbol)")
-                .symbolVariant(.fill)
-                .font(.subheadline)
-            
-            Text("""
-                \(getBudgetMessage(balance).message)
-                """)
-            .font(.footnote)
+            MessagesContent(title: "", icon: getBudgetMessage(balance).symbol, message: getBudgetMessage(balance).message)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(12)
