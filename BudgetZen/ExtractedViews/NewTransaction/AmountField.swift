@@ -10,7 +10,7 @@ import SwiftUI
 struct AmountField: View {
     @Binding var entry : String
     @Binding var number : Double
-
+    
     var isIncome : Bool?
     var type : Transaction.TransactionType? {
         if isIncome != nil {
@@ -22,7 +22,7 @@ struct AmountField: View {
     
     var colors : (foreground: Color, shadow: Color) {
         if let selectedType = type {
-                return (foreground: selectedType.getTypeStyle().foreground, shadow: selectedType.getTypeStyle().shadow)
+            return (foreground: selectedType.getTypeStyle().foreground, shadow: selectedType.getTypeStyle().shadow)
         } else {
             return (foreground: .balanceText, shadow: .balance)
         }
@@ -50,14 +50,14 @@ struct AmountField: View {
                                 entry.remove(at: overflow)
                             }
                         }
-                    
+                        
                         number = Double(entry.replacingOccurrences(of: ",", with: ".")) ?? number
                         
                     })
                 
                 Image(systemName: "eurosign")
                     .font(.none)
-
+                
             }
         }
     }

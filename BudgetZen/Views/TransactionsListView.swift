@@ -13,7 +13,7 @@ struct TransactionsListView: View {
     @State private var selectedFilter : String = "tous"
     
     @State private var results : [Transaction] = []
- 
+    
     private func applySearchAndFilters(){
         var list = transactions.sorted{ formatDate($0.date) > formatDate($1.date)}
         
@@ -27,6 +27,8 @@ struct TransactionsListView: View {
         
         results = list
     }
+    
+    @FocusState private var isFocused : Bool
     
     var body: some View {
         ViewStyle(title: "Toutes les transactions") {
@@ -47,42 +49,47 @@ struct TransactionsListView: View {
             .task {
                 applySearchAndFilters()
             }
+            .onTapGesture {
+                isFocused = false
+            }
         } areaBarOption: {
             AnyView(
                 HStack(spacing: 16){
-                Searchbar(query: $query)
-                
-                Menu {
-                    Text("Choisissez un filtre")
+                    Searchbar(query: $query)
+                        .focused($isFocused)
                     
-                    Picker("Type de transaction",selection: $selectedFilter) {
-                        Text("Tous")
-                            .tag("tous")
+                    Menu {
+                        Text("Choisissez un filtre")
                         
-                        ForEach(Transaction.TransactionType.allCases, id: \.self){ type in
-                            Text("\(type.rawValue)s")
-                                .tag(type.rawValue.lowercased())
-                                .font(.headline)
+                        Picker("Type de transaction",selection: $selectedFilter) {
+                            Text("Tous")
+                                .tag("tous")
+                            
+                            ForEach(Transaction.TransactionType.allCases, id: \.self){ type in
+                                Text("\(type.rawValue)s")
+                                    .tag(type.rawValue.lowercased())
+                                    .font(.headline)
+                            }
                         }
+                        
+                    } label: {
+                        Image(systemName: "line.3.horizontal.decrease")
+                            .foregroundStyle(.bg)
+                            .font(.title)
+                            .padding(.vertical, 12)
+                            .padding(.horizontal, 6)
+                            .background{
+                                Circle()
+                                    .fill(.accent)
+                            }
                     }
+                    .contentShape(Circle())
+                    .glassEffect(.regular, in : .circle)
                     
-                } label: {
-                    Image(systemName: "line.3.horizontal.decrease")
-                        .foregroundStyle(.bg)
-                        .font(.title)
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 6)
-                        .background{
-                            Circle()
-                                .fill(.accent)
-                        }
                 }
-                .contentShape(Circle())
-                .glassEffect(.regular, in : .circle)
-                
-            }
-                )
+            )
         }
+
     }
 }
 

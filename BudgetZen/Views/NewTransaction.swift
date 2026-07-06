@@ -42,12 +42,24 @@ struct NewTransaction: View {
     
     @State private var isValidField : (title : Bool, amount : Bool, type : Bool, category : Bool, date : Bool) = (title : true, amount : true, type : true, category : true, date : true)
     
+    @FocusState private var focused : FocusableField?
+    
     var body: some View {
         ViewStyle(title: "Nouvelle transaction") {
             VStack(spacing: 12){
                 TitleField(entry: $titleEntry, isValid: isValidField.title)
-                
+                    .focused($focused, equals: .title)
+                    .submitLabel(.continue)
+                    .onSubmit {
+                        focused = .amount
+                    }
+
                 AmountField(entry: $amountEntry, number: $amountInDouble, isIncome: typeIsIncome, isValid: isValidField.amount)
+                    .focused($focused, equals: .amount)
+                    .submitLabel(.done)
+                    .onSubmit {
+                        focused = nil
+                    }
                 
                 TypePickerField(entry: $typeEntry, isValid: isValidField.type)
                 
@@ -88,6 +100,11 @@ struct NewTransaction: View {
             .buttonStyle(.glassProminent)
 
         }
+        .scrollDismissesKeyboard(.immediately)
+        .onTapGesture {
+            focused = nil
+        }
+
     }
 }
 

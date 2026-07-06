@@ -9,6 +9,11 @@ import Foundation
 
 //************ FORMULAIRE
 
+//Champs du formulaire
+enum FocusableField: Hashable {
+    case title, amount
+}
+
 //Vérification des saisies
 func validDateQuery(_ dayQuery : String,_ monthQuery : String,_ yearQuery : String) -> [String] {
     
