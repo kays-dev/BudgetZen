@@ -233,3 +233,8 @@ func getMostUsedCategory(_ array : [Transaction]) -> String {
     
     return maxCountCategory.first!.rawValue
 }
+
+//Statistiques des revenus
+func getMaxIncome(_ array : [ Transaction ]) -> Double {
+    return array.filter{ $0.type == .income }.map{ $0.amount }.max()!
+}

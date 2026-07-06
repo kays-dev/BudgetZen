@@ -18,7 +18,7 @@ struct IncomeSection: View {
 
     var body: some View {
         
-        StatisticsSection(title: "Global") {
+        StatisticsSection(title: "Revenus") {
             
             VStack(spacing: 12){
                 
@@ -36,5 +36,5 @@ struct IncomeSection: View {
 }
 
 #Preview {
-    IncomeSection(incomes: getTotalIncomes(transactions), maxIncome: getBalance(transactions), transaction: getTotalTransactions(transactions), infoType: .income)
+    IncomeSection(incomes: getTotalIncomes(transactions), maxIncome: getMaxIncome(transactions), transaction: getTotalTransactions(transactions), infoType: .income)
 }
