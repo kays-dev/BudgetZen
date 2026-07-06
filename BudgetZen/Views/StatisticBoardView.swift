@@ -8,22 +8,23 @@
 import SwiftUI
 
 struct StatisticBoardView: View {
+    
+    @State private var statistics : (balance : Double, totalTransactions : Int, mainCategory: String, incomes : Double, maxIncome: Double, incomeTransactions : Int, expenses : Double, maxExpense: Double, averageExpense : Double, expenseTransactions : Int) = (balance : 0, totalTransactions : 0, mainCategory: "", incomes : 0, maxIncome: 0, incomeTransactions : 0, expenses : 0, maxExpense: 0, averageExpense : 0, expenseTransactions : 0)
+    
     var body: some View {
         ViewStyle(title: "Analyse des transactions") {
-            StatisticsSection(title: "Global") {
-                
-            }
+            GlobalSection(balance: statistics.balance, transaction: statistics.totalTransactions, category: statistics.mainCategory)
             
-            StatisticsSection(title: "Revenus") {
-                
-            }
+            IncomeSection(incomes: statistics.incomes, maxIncome: statistics.maxIncome, transaction: statistics.incomeTransactions)
             
-            StatisticsSection(title: "Dépenses") {
-                
-            }
+            ExpenseSection(expense: statistics.expenses, maxExpense: statistics.maxExpense, averageExpense: statistics.averageExpense, transaction: statistics.expenseTransactions)
+
+        }
+        .onChange(of: transactions) { _, newValue in
+            statistics = actualizeStatistics(newValue)
         }
         .task {
-            print(getMostUsedCategory(transactions))
+            statistics = actualizeStatistics(transactions)
         }
     }
 }

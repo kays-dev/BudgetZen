@@ -8,19 +8,23 @@
 import SwiftUI
 
 struct StatisticsSection<Content: View>: View {
-    var title : String
+    var infoType : InfoType
+    var title : String {
+        infoType != .global ? "\(infoType.rawValue)s" : infoType.rawValue
+    }
     
-    @ViewBuilder var content: () -> Content
+    @ViewBuilder var content: (_ type : InfoType) -> Content
     
     var body: some View {
-        VStack(spacing: 20){
+        VStack(alignment: .leading, spacing: 12){
             
             Text(title)
                 .font(.title3)
                 .bold()
                 .foregroundStyle(.secondaryText)
+                .padding(.leading, 4)
             
-            content()
+            content(infoType)
                 .frame(maxWidth: .infinity)
             
         }
@@ -29,7 +33,7 @@ struct StatisticsSection<Content: View>: View {
 }
 
 #Preview {
-    StatisticsSection(title: "Global") {
+    StatisticsSection(infoType: .global) { type in
         
     }
 }

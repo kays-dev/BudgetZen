@@ -13,20 +13,17 @@ struct IncomeSection: View {
     var maxIncome : Double
     var transaction : Int
 
-    
-    var infoType : InfoType
-
     var body: some View {
         
-        StatisticsSection(title: "Revenus") {
+        StatisticsSection(infoType: .income) { type in
             
             VStack(spacing: 12){
                 
-                InfoCard(info: (name: "Total", detail: (amount: incomes, number: nil, text: nil), type: infoType), isStatistic: false)
+                InfoCard(info: (name: "Total", detail: (amount: incomes, number: nil, text: nil), type: type), isStatistic: false)
                 
-                InfoCard(info: (name: "Plus grand revenu", detail: (amount: maxIncome, number: nil, text: nil), type: infoType), isStatistic: true, symbol: "trophy")
+                InfoCard(info: (name: "Maximum", detail: (amount: maxIncome, number: nil, text: nil), type: type), isStatistic: true, symbol: "rosette")
 
-                    InfoCard(info: (name: "Transactions", detail: (amount: nil, number: transaction, text: nil), type: infoType), isStatistic: true, symbol: "arrow.left.arrow.right")
+                    InfoCard(info: (name: "Transactions", detail: (amount: nil, number: transaction, text: nil), type: type), isStatistic: true, symbol: "arrow.left.arrow.right")
  
             }
             
@@ -36,5 +33,5 @@ struct IncomeSection: View {
 }
 
 #Preview {
-    IncomeSection(incomes: getTotalIncomes(transactions), maxIncome: getMaxIncome(transactions), transaction: getTotalTransactions(transactions), infoType: .income)
+    IncomeSection(incomes: getTotalIncomes(transactions), maxIncome: getMaxIncome(transactions), transaction: getTotalTransactions(transactions))
 }

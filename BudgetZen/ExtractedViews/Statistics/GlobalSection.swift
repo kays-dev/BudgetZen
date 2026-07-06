@@ -12,22 +12,20 @@ struct GlobalSection: View {
     var balance : Double
     var transaction : Int
     var category : String
-    
-    var infoType : InfoType
 
     var body: some View {
         
-        StatisticsSection(title: "Global") {
+        StatisticsSection(infoType: .global) { type in
             
             VStack(spacing: 12){
                 
-                InfoCard(info: (name: "Solde", detail: (amount: balance, number: nil, text: nil), type: infoType), isStatistic: false)
+                InfoCard(info: (name: "Solde", detail: (amount: balance, number: nil, text: nil), type: type), isStatistic: false)
                 
                 HStack(spacing: 12){
                     
-                    InfoCard(info: (name: "Transactions", detail: (amount: nil, number: transaction, text: nil), type: infoType), isStatistic: true, symbol: "arrow.left.arrow.right")
+                    InfoCard(info: (name: "Transactions", detail: (amount: nil, number: transaction, text: nil), type: type), isStatistic: true, symbol: "arrow.left.arrow.right")
                     
-                    InfoCard(info: (name: "Catégorie majeure", detail: (amount: nil, number: nil, text: category), type: infoType), isStatistic: true, symbol: "trophy")
+                    InfoCard(info: (name: "Catégorie majeure", detail: (amount: nil, number: nil, text: category), type: type), isStatistic: true, symbol: "rosette")
                     
                 }
                 
@@ -37,5 +35,5 @@ struct GlobalSection: View {
 }
 
 #Preview {
-    GlobalSection(balance: getBalance(transactions), transaction: getTotalTransactions(transactions), category: getMostUsedCategory(transactions), infoType: .global)
+    GlobalSection(balance: getBalance(transactions), transaction: getTotalTransactions(transactions), category: getMostUsedCategory(transactions))
 }

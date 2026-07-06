@@ -24,9 +24,9 @@ struct DashboardGrid: View {
             
             LazyVGrid(columns: columns, spacing: 12) {
                 
-                InfoCard(info: (name: "Total des revenus", detail: (amount: incomes, number: nil, text: nil), type: .income))
+                InfoCard(info: (name: "Revenus", detail: (amount: incomes, number: nil, text: nil), type: .income))
                 
-                InfoCard(info: (name: "Total des dépenses", detail: (amount: expenses, number: nil, text: nil), type: .expense))
+                InfoCard(info: (name: "Dépenses", detail: (amount: expenses, number: nil, text: nil), type: .expense))
                 
                 InfoCard(info: (name: nil, detail: (amount: nil, number: incomesCount, text: nil), type: .income))
                 

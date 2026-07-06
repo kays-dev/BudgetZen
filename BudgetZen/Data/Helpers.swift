@@ -238,3 +238,24 @@ func getMostUsedCategory(_ array : [Transaction]) -> String {
 func getMaxIncome(_ array : [ Transaction ]) -> Double {
     return array.filter{ $0.type == .income }.map{ $0.amount }.max()!
 }
+
+//Statistiques des dépenses
+func getMaxExpense(_ array : [ Transaction ]) -> Double {
+    return array.filter{ $0.type == .expense }.map{ $0.amount }.max()!
+}
+
+func getAverageExpense(_ array : [ Transaction ]) -> Double {
+    return getTotalExpenses(array) / Double(getExpenseTransactions(array))
+}
+
+func actualizeStatistics(_ array : [ Transaction ]) -> (balance : Double, totalTransactions : Int, mainCategory: String, incomes : Double, maxIncome: Double, incomeTransactions : Int, expenses : Double, maxExpense: Double, averageExpense : Double, expenseTransactions : Int){
+    
+    let dashboardInfos = actualizeDashboard(array)
+    
+    let mainCategory = getMostUsedCategory(array)
+    let maxIncome = getMaxIncome(array)
+    let maxExpense = getMaxExpense(array)
+    let averageExpense = getAverageExpense(array)
+    
+    return (balance : dashboardInfos.balance, totalTransactions : dashboardInfos.totalTransactions, mainCategory: mainCategory, incomes : dashboardInfos.incomes, maxIncome: maxIncome, incomeTransactions : dashboardInfos.incomeTransactions, expenses : dashboardInfos.expenses, maxExpense: maxExpense, averageExpense : averageExpense, expenseTransactions : dashboardInfos.expenseTransactions)
+}

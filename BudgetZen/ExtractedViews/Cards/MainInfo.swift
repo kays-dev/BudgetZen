@@ -17,7 +17,7 @@ struct MainInfo: View {
     let infoTypeColors : (foreground: Color, shadow: Color)
     
     var body: some View {
-        VStack(spacing: 4){
+        VStack(spacing: 8){
             
             if let doubleInfo = amountInfo {
 
