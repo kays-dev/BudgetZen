@@ -33,7 +33,7 @@ struct TransactionsListView: View {
     var body: some View {
         ViewStyle(title: "Toutes les transactions") {
             VStack{
-                VStack(spacing: 12){
+                LazyVStack(spacing: 12){
                     ForEach(results){ transaction in
                         TransactionRow(transaction: transaction)
                     }
@@ -46,11 +46,11 @@ struct TransactionsListView: View {
                     applySearchAndFilters()
                 }
             }
-            .task {
-                applySearchAndFilters()
-            }
             .onTapGesture {
                 isFocused = false
+            }
+            .task {
+                applySearchAndFilters()
             }
         } areaBarOption: {
             AnyView(

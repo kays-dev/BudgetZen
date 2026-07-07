@@ -31,7 +31,7 @@ struct AmountField: View {
     var isValid : Bool
     
     var body: some View {
-        FieldStyle(fieldBorder: isIncome != nil ? type!.getTypeStyle().border : .balance, title: "Montant", charLimit: 20, errorMessage: "Veuillez renseigner le montant de la transaction", isValid: isValid){ limit in
+        FieldStyle(fieldBorder: isIncome != nil ? type!.getTypeStyle().border : .balance, title: "Montant", charLimit: 20, errorMessage: "Veuillez renseigner le montant supérieur à 0 €", isValid: isValid){ limit in
             
             HStack{
                 Image(systemName: isIncome != nil ? type!.getTypeOperator() : "pencil")
@@ -57,6 +57,7 @@ struct AmountField: View {
                 
                 Image(systemName: "eurosign")
                     .font(.none)
+                    .foregroundStyle(.primaryText)
                 
             }
         }

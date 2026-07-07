@@ -26,6 +26,7 @@ struct TransactionAmount: View {
                 
                 Image(systemName: "eurosign")
                     .font(.footnote)
+                    .foregroundStyle(.primaryText)
             }
         }
         .frame(maxWidth: 120, alignment: .leading)

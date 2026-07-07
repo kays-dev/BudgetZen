@@ -45,7 +45,7 @@ struct NewTransaction: View {
     @FocusState private var focused : FocusableField?
     
     var body: some View {
-        ViewStyle(title: "Nouvelle transaction") {
+        ViewStyle(title: "Ajouter une transaction") {
             VStack(spacing: 12){
                 TitleField(entry: $titleEntry, isValid: isValidField.title)
                     .focused($focused, equals: .title)
